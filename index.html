@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Notebook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .footer {
+            text-align: right;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+        .footer p {
+            margin: 0;
+        }
+        .version {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Notebook</h1>
+    <div>
+        <textarea id="note" rows="10" cols="50" placeholder="Start typing your notes here..."></textarea>
+    </div>
+    <div>
+        <button onclick="changeTextColor()">Change Text Color</button>
+        <button onclick="importImage()">Import Image</button>
+        <button onclick="makeTextBigger()">Make Text Bigger</button>
+    </div>
+    <div>
+        <img id="image" src="" alt="Imported Image" style="display: none;">
+    </div>
+
+    <!-- Copyright and Version -->
+    <div class="footer">
+        <p>&copy; Copyright Teknik.AB Games</p>
+        <p class="version">Version 1.0</p>
+    </div>
+
+    <script>
+        function changeTextColor() {
+            const textColor = prompt("Enter a text color (e.g., red, #00ff00):");
+            document.getElementById("note").style.color = textColor;
+        }
+
+        function importImage() {
+            const imageUrl = prompt("Enter the URL of an image:");
+            if (imageUrl) {
+                document.getElementById("image").src = imageUrl;
+                document.getElementById("image").style.display = "block";
+            }
+        }
+
+        function makeTextBigger() {
+            const currentSize = window.getComputedStyle(document.getElementById("note"), null).getPropertyValue('font-size');
+            const newSize = (parseInt(currentSize) + 2) + "px";
+            document.getElementById("note").style.fontSize = newSize;
+        }
+    </script>
+</body>
+</html>
