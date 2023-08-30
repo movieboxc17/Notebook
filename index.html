@@ -27,8 +27,10 @@
     </div>
     <div>
         <button onclick="changeTextColor()">Change Text Color</button>
+        <input type="file" id="imageInput" accept="image/*" style="display: none;">
         <button onclick="importImage()">Import Image</button>
         <button onclick="makeTextBigger()">Make Text Bigger</button>
+        <button onclick="makeTextSmaller()">Make Text Smaller</button>
     </div>
     <div>
         <img id="image" src="" alt="Imported Image" style="display: none;">
@@ -47,16 +49,29 @@
         }
 
         function importImage() {
-            const imageUrl = prompt("Enter the URL of an image:");
-            if (imageUrl) {
-                document.getElementById("image").src = imageUrl;
-                document.getElementById("image").style.display = "block";
-            }
+            // Trigger the file input element to open a file dialog
+            document.getElementById("imageInput").click();
+
+            // Listen for changes in the file input
+            document.getElementById("imageInput").addEventListener("change", function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const imageUrl = URL.createObjectURL(file);
+                    document.getElementById("image").src = imageUrl;
+                    document.getElementById("image").style.display = "block";
+                }
+            });
         }
 
         function makeTextBigger() {
             const currentSize = window.getComputedStyle(document.getElementById("note"), null).getPropertyValue('font-size');
             const newSize = (parseInt(currentSize) + 2) + "px";
+            document.getElementById("note").style.fontSize = newSize;
+        }
+
+        function makeTextSmaller() {
+            const currentSize = window.getComputedStyle(document.getElementById("note"), null).getPropertyValue('font-size');
+            const newSize = (parseInt(currentSize) - 2) + "px";
             document.getElementById("note").style.fontSize = newSize;
         }
     </script>
