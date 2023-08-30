@@ -26,7 +26,8 @@
         <textarea id="note" rows="10" cols="50" placeholder="Start typing your notes here..."></textarea>
     </div>
     <div>
-        <button onclick="changeTextColor()">Change Text Color</button>
+        <input type="color" id="colorPicker" style="display: none;">
+        <button onclick="openColorPicker()">Change Text Color</button>
         <input type="file" id="imageInput" accept="image/*" style="display: none;">
         <button onclick="importImage()">Import Image</button>
         <button onclick="makeTextBigger()">Make Text Bigger</button>
@@ -43,9 +44,13 @@
     </div>
 
     <script>
-        function changeTextColor() {
-            const textColor = prompt("Enter a text color (e.g., red, #00ff00):");
-            document.getElementById("note").style.color = textColor;
+        function openColorPicker() {
+            const colorPicker = document.getElementById("colorPicker");
+            colorPicker.click();
+            colorPicker.addEventListener("input", function() {
+                const selectedColor = colorPicker.value;
+                document.getElementById("note").style.color = selectedColor;
+            });
         }
 
         function importImage() {
