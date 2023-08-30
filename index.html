@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Stylish Notebook</title>
+    <title>My Word-like Notebook</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            font-family: Calibri, Arial, sans-serif;
+            background-color: white;
             margin: 0;
             padding: 0;
-            transition: background-color 0.5s ease; /* Smooth background color transition */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: space-between;
         }
         h1 {
-            background-color: #333;
+            background-color: #2b5797;
             color: white;
-            padding: 20px;
+            padding: 10px 20px;
             margin: 0;
+            font-size: 24px;
+            border-bottom: 1px solid #ccc;
         }
         .container {
-            background-color: white;
             margin: 20px;
             padding: 20px;
+            border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: white;
         }
         textarea {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: none;
             border-radius: 5px;
             resize: none;
-            transition: border-color 0.3s ease; /* Smooth border color transition */
+            font-size: 16px;
         }
         select, button, input[type="file"] {
             padding: 10px;
-            margin-right: 10px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth background and transform transition */
+            background-color: #f3f3f3;
+            color: #333;
         }
         select:hover, button:hover, input[type="file"]:hover {
-            background-color: #333;
-            color: white;
+            background-color: #ddd;
         }
         img {
             max-width: 100%;
@@ -50,24 +55,20 @@
         }
         .footer {
             text-align: right;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-        }
-        .footer p {
-            margin: 0;
+            margin-right: 20px;
+            margin-bottom: 10px;
             color: #666;
+            font-size: 14px;
         }
         .version {
             font-size: 12px;
-            color: #666;
         }
     </style>
 </head>
 <body>
-    <h1>My Stylish Notebook</h1>
+    <h1>My Word-like Notebook</h1>
     <div class="container">
-        <textarea id="note" rows="10" cols="50" placeholder="Start typing your notes here..."></textarea>
+        <textarea id="note" rows="10" placeholder="Start typing your notes here..."></textarea>
     </div>
     <div class="container">
         <select id="colorSelect">
