@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Notebook</title>
+    <title>My Word-like Notebook</title>
     <style>
         body {
             font-family: Calibri, Arial, sans-serif;
@@ -66,7 +66,7 @@
     </style>
 </head>
 <body>
-    <h1>My Notebook</h1>
+    <h1>My Word-like Notebook</h1>
     <div class="container">
         <textarea id="note" rows="10" placeholder="Start typing your notes here..."></textarea>
     </div>
@@ -92,6 +92,19 @@
         <button onclick="importImage()">Import Image</button>
         <button onclick="makeTextBigger()">Make Text Bigger</button>
         <button onclick="makeTextSmaller()">Make Text Smaller</button>
+        <button onclick="alignText('left')">Left Align</button>
+        <button onclick="alignText('center')">Center Align</button>
+        <button onclick="alignText('right')">Right Align</button>
+        <button onclick="toggleBold()">Bold</button>
+        <button onclick="toggleItalic()">Italic</button>
+        <button onclick="toggleUnderline()">Underline</button>
+        <button onclick="saveNote()">Save Note</button>
+        <button onclick="loadNote()">Load Note</button>
+        <button onclick="clearNote()">Clear All Content</button>
+        <button onclick="insertDateTime()">Insert Date/Time</button>
+        <button onclick="findText()">Find Text</button>
+        <button onclick="replaceText()">Replace Text</button>
+        <button onclick="printNote()">Print</button>
     </div>
     <div class="container">
         <img id="image" src="" alt="Imported Image">
@@ -135,6 +148,81 @@
             const currentSize = window.getComputedStyle(document.getElementById("note"), null).getPropertyValue('font-size');
             const newSize = (parseInt(currentSize) - 2) + "px";
             document.getElementById("note").style.fontSize = newSize;
+        }
+
+        function alignText(align) {
+            document.getElementById("note").style.textAlign = align;
+        }
+
+        function toggleBold() {
+            document.execCommand('bold', false, null);
+        }
+
+        function toggleItalic() {
+            document.execCommand('italic', false, null);
+        }
+
+        function toggleUnderline() {
+            document.execCommand('underline', false, null);
+        }
+
+        function saveNote() {
+            const noteContent = document.getElementById("note").value;
+            localStorage.setItem("savedNote", noteContent);
+        }
+
+        function loadNote() {
+            const savedNote = localStorage.getItem("savedNote");
+            if (savedNote) {
+                document.getElementById("note").value = savedNote;
+            }
+        }
+
+        function clearNote() {
+            document.getElementById("note").value = '';
+        }
+
+        function insertDateTime() {
+            const dateTime = new Date().toLocaleString();
+            const note = document.getElementById("note");
+            const startPos = note.selectionStart;
+            const endPos = note.selectionEnd;
+            const text = note.value;
+            const newText = text.substring(0, startPos) + dateTime + text.substring(endPos, text.length);
+            note.value = newText;
+        }
+
+        function findText() {
+            const searchText = prompt("Enter text to find:");
+            if (searchText) {
+                const noteContent = document.getElementById("note").value;
+                const searchIndex = noteContent.indexOf(searchText);
+                if (searchIndex !== -1) {
+                    const startPos = searchIndex;
+                    const endPos = searchIndex + searchText.length;
+                    const note = document.getElementById("note");
+                    note.setSelectionRange(startPos, endPos);
+                    note.focus();
+                } else {
+                    alert("Text not found.");
+                }
+            }
+        }
+
+        function replaceText() {
+            const searchText = prompt("Enter text to find:");
+            if (searchText) {
+                const replaceText = prompt("Enter text to replace with:");
+                if (replaceText) {
+                    const noteContent = document.getElementById("note").value;
+                    const updatedContent = noteContent.replace(searchText, replaceText);
+                    document.getElementById("note").value = updatedContent;
+                }
+            }
+        }
+
+        function printNote() {
+            window.print();
         }
     </script>
 </body>
