@@ -4,14 +4,10 @@
     <title>My Notebook</title>
     <style>
         body {
-            font-family: Calibri, Arial, sans-serif;
+            font-family: Arial, sans-serif;
             background-color: white;
             margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            justify-content: space-between;
+            padding: 20px;
         }
         h1 {
             background-color: #2b5797;
@@ -22,41 +18,46 @@
             border-bottom: 1px solid #ccc;
         }
         .container {
-            margin: 20px;
+            margin: 20px auto;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             background-color: white;
+            max-width: 800px;
         }
         textarea {
             width: 100%;
             padding: 10px;
-            border: none;
+            border: 1px solid #ccc;
             border-radius: 5px;
             resize: none;
             font-size: 16px;
         }
-        select, button, input[type="file"] {
-            padding: 10px;
-            border: none;
+        .toolbar {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .toolbar button {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
             border-radius: 5px;
             cursor: pointer;
             background-color: #f3f3f3;
             color: #333;
+            margin: 0 5px;
         }
-        select:hover, button:hover, input[type="file"]:hover {
+        .toolbar button:hover {
             background-color: #ddd;
         }
-        img {
+        #image {
             max-width: 100%;
             height: auto;
             display: none;
+            margin-top: 10px;
         }
         .footer {
             text-align: right;
-            margin-right: 20px;
-            margin-bottom: 10px;
+            margin-top: 10px;
             color: #666;
             font-size: 14px;
         }
@@ -66,45 +67,20 @@
     </style>
 </head>
 <body>
-    <h1>My Ntebook</h1>
+    <h1>My Notebook</h1>
     <div class="container">
         <textarea id="note" rows="10" placeholder="Start typing your notes here..."></textarea>
-    </div>
-    <div class="container">
-        <select id="colorSelect">
-            <option value="black">Black</option>
-            <option value="red">Red</option>
-            <option value="green">Green</option>
-            <option value="blue">Blue</option>
-            <option value="yellow">Yellow</option>
-            <option value="orange">Orange</option>
-            <option value="purple">Purple</option>
-            <option value="pink">Pink</option>
-            <option value="brown">Brown</option>
-            <option value="gray">Gray</option>
-            <option value="teal">Teal</option>
-            <option value="navy">Navy</option>
-            <option value="maroon">Maroon</option>
-            <!-- Add more color options as needed -->
-        </select>
-        <button onclick="changeTextColor()">Change Text Color</button>
-        <input type="file" id="imageInput" accept="image/*" style="display: none;">
-        <button onclick="importImage()">Import Image</button>
-        <button onclick="makeTextBigger()">Make Text Bigger</button>
-        <button onclick="makeTextSmaller()">Make Text Smaller</button>
-        <button onclick="alignText('left')">Left Align</button>
-        <button onclick="alignText('center')">Center Align</button>
-        <button onclick="alignText('right')">Right Align</button>
-        <button onclick="toggleBold()">Bold</button>
-        <button onclick="toggleItalic()">Italic</button>
-        <button onclick="toggleUnderline()">Underline</button>
-        <button onclick="saveNote()">Save Note</button>
-        <button onclick="loadNote()">Load Note</button>
-        <button onclick="clearNote()">Clear All Content</button>
-        <button onclick="insertDateTime()">Insert Date/Time</button>
-        <button onclick="findText()">Find Text</button>
-        <button onclick="replaceText()">Replace Text</button>
-        <button onclick="printNote()">Print</button>
+        <div class="toolbar">
+            <button onclick="toggleBold()">Bold</button>
+            <button onclick="toggleItalic()">Italic</button>
+            <button onclick="toggleUnderline()">Underline</button>
+            <button onclick="changeTextColor()">Text Color</button>
+            <button onclick="changeFontSize()">Font Size</button>
+            <button onclick="alignText('left')">Left Align</button>
+            <button onclick="alignText('center')">Center Align</button>
+            <button onclick="alignText('right')">Right Align</button>
+            <button onclick="insertDateTime()">Insert Date/Time</button>
+        </div>
     </div>
     <div class="container">
         <img id="image" src="" alt="Imported Image">
@@ -117,113 +93,7 @@
     </div>
 
     <script>
-        function changeTextColor() {
-            const colorSelect = document.getElementById("colorSelect");
-            const selectedColor = colorSelect.value;
-            document.getElementById("note").style.color = selectedColor;
-        }
-
-        function importImage() {
-            // Trigger the file input element to open a file dialog
-            document.getElementById("imageInput").click();
-
-            // Listen for changes in the file input
-            document.getElementById("imageInput").addEventListener("change", function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const imageUrl = URL.createObjectURL(file);
-                    document.getElementById("image").src = imageUrl;
-                    document.getElementById("image").style.display = "block";
-                }
-            });
-        }
-
-        function makeTextBigger() {
-            const currentSize = window.getComputedStyle(document.getElementById("note"), null).getPropertyValue('font-size');
-            const newSize = (parseInt(currentSize) + 2) + "px";
-            document.getElementById("note").style.fontSize = newSize;
-        }
-
-        function makeTextSmaller() {
-            const currentSize = window.getComputedStyle(document.getElementById("note"), null).getPropertyValue('font-size');
-            const newSize = (parseInt(currentSize) - 2) + "px";
-            document.getElementById("note").style.fontSize = newSize;
-        }
-
-        function alignText(align) {
-            document.getElementById("note").style.textAlign = align;
-        }
-
-        function toggleBold() {
-            document.execCommand('bold', false, null);
-        }
-
-        function toggleItalic() {
-            document.execCommand('italic', false, null);
-        }
-
-        function toggleUnderline() {
-            document.execCommand('underline', false, null);
-        }
-
-        function saveNote() {
-            const noteContent = document.getElementById("note").value;
-            localStorage.setItem("savedNote", noteContent);
-        }
-
-        function loadNote() {
-            const savedNote = localStorage.getItem("savedNote");
-            if (savedNote) {
-                document.getElementById("note").value = savedNote;
-            }
-        }
-
-        function clearNote() {
-            document.getElementById("note").value = '';
-        }
-
-        function insertDateTime() {
-            const dateTime = new Date().toLocaleString();
-            const note = document.getElementById("note");
-            const startPos = note.selectionStart;
-            const endPos = note.selectionEnd;
-            const text = note.value;
-            const newText = text.substring(0, startPos) + dateTime + text.substring(endPos, text.length);
-            note.value = newText;
-        }
-
-        function findText() {
-            const searchText = prompt("Enter text to find:");
-            if (searchText) {
-                const noteContent = document.getElementById("note").value;
-                const searchIndex = noteContent.indexOf(searchText);
-                if (searchIndex !== -1) {
-                    const startPos = searchIndex;
-                    const endPos = searchIndex + searchText.length;
-                    const note = document.getElementById("note");
-                    note.setSelectionRange(startPos, endPos);
-                    note.focus();
-                } else {
-                    alert("Text not found.");
-                }
-            }
-        }
-
-        function replaceText() {
-            const searchText = prompt("Enter text to find:");
-            if (searchText) {
-                const replaceText = prompt("Enter text to replace with:");
-                if (replaceText) {
-                    const noteContent = document.getElementById("note").value;
-                    const updatedContent = noteContent.replace(searchText, replaceText);
-                    document.getElementById("note").value = updatedContent;
-                }
-            }
-        }
-
-        function printNote() {
-            window.print();
-        }
+        // Your JavaScript functions here
     </script>
 </body>
 </html>
